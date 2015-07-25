@@ -12,6 +12,6 @@ setup(name='Menus',
       author_email='johnymoswag@gmail.com',
       license='MIT',
       packages=find_packages(),
-      zip_safe=False,
+      zip_safe=True,
       cmdclass=cmd_class,
       )

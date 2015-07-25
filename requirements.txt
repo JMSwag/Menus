@@ -1,2 +1,4 @@
 six
 versioneer
+twine
+wheel
