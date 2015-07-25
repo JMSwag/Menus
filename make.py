@@ -17,7 +17,10 @@ class ChDir(object):
 
 
 def deploy(sub_cmd=None):
-    version = raw_input('Enter version\n--> ')
+    if sub_cmd is None:
+        version = raw_input('Enter version\n--> ')
+    else:
+        version = sub_cmd
     cmds = ['git tag {}'.format(version),
             'python setup.py sdist bdist_wheel',
             'twine upload dist/*']
@@ -26,7 +29,7 @@ def deploy(sub_cmd=None):
     remove_dist()
 
 
-def remove_dist():
+def remove_dist(sub_cmd=None):
     with ChDir(u'dist'):
         files = os.listdir(os.getcwd())
         for f in files:
@@ -46,11 +49,15 @@ commands = {
 def main():
     try:
         cmd = sys.argv[1]
+        try:
+            sub_cmd = sys.argv[2]
+        except IndexError:
+            sub_cmd = None
         if cmd not in commands.keys():
             sys.exit(u'Not a valid command:\n\nAvailable '
                      u'commands\n{}'.format(' '.join(commands.keys())))
         else:
-            commands[cmd]()
+            commands[cmd](sub_cmd)
     except IndexError:
         sys.exit(u'You must pass a command')
 
