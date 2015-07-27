@@ -29,6 +29,13 @@ def deploy(sub_cmd=None):
     remove_dist()
 
 
+def docs(sub_cmd=None):
+    cmds = ['cp README.md docs/index.md', 'mkdocs build --clean',
+            'python dev/move.py']
+    for c in cmds:
+        os.system(c)
+
+
 def remove_dist(sub_cmd=None):
     with ChDir(u'dist'):
         files = os.listdir(os.getcwd())
@@ -43,6 +50,7 @@ def remove_dist(sub_cmd=None):
 commands = {
     'deploy': deploy,
     'remove_dist': remove_dist,
+    'docs': docs
 }
 
 

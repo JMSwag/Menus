@@ -1,0 +1,7 @@
+site_name: Menus
+pages:
+- Home: index.md
+
+theme: journal
+
+dev_addr: 0.0.0.0:80
