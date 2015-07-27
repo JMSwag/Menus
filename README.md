@@ -24,8 +24,12 @@ class Cool(BaseMenu):
         super(Cool, self).__init__(options=options)
 
     def speak(self):
+        # Used to nicely display a message towards the
+        # middle of the screen
         self.display_msg('Cool is speaking')
         input()
+        # Used to return to Cool Menu. If omitted
+        # You'll be returned to the Main Menu
         self()
 
 
