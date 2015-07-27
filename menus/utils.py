@@ -20,7 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from __future__ import print_function
-import inspect
 import logging
 import os
 import platform
@@ -198,12 +197,7 @@ def check_options_else_raise(options):
 
 def check_mro(c):
     # Ensure index 1 subclassed BaseMenu
-    types = inspect.getmro(c.__class__)
-    for t in types:
-        t_str = str(t)
-        if 'BaseMenu' in t_str:
-            break
-    else:
+    if issubclass(c.__class__, BaseMenu) is False:
         raise MenusError('Not a sublcass of BaseMenu \n\nclass '
                          '{}'.format(c.__class__.__name__),
                          expected=True)
