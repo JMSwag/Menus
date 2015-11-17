@@ -65,9 +65,8 @@ class Keys(BaseMenu):
         input()
         self()
 
-menus = [Cool(), Hot(), Keys()]
 
-engine = Engine(app_name='My App', menus=menus)
+engine = Engine(app_name='My App', menus=[Cool(), Hot(), Keys()])
 
 engine.start()
 ```
