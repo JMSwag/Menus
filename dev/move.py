@@ -6,7 +6,7 @@ import shutil
 from jms_utils.paths import ChDir
 
 HTML_DIR = os.path.join(os.getcwd(), 'site')
-DEST_DIR = os.path.join(os.path.expanduser(u'~'), u'Dropbox',
+DEST_DIR = os.path.join(os.path.expanduser(u'~'), u'BTSync',
                         u'code', u'Web', u'Menus')
 
 

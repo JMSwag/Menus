@@ -25,7 +25,7 @@ class Cool(BaseMenu):
 
     def __init__(self):
         # An option is a tuple which consists of ('Display Name', function)
-        options = [('Speak', self.speak), ('Main Menu', self.done)]
+        options = [('Speak', self.speak)]
         super(Cool, self).__init__(options=options)
 
     def speak(self):
@@ -41,7 +41,7 @@ class Cool(BaseMenu):
 class Hot(BaseMenu):
 
     def __init__(self):
-        options = [('Speak', self.speak), ('Main Menu', self.done)]
+        options = [('Speak', self.speak)]
         super(Hot, self).__init__(options=options)
 
     def speak(self):
@@ -56,7 +56,6 @@ class Keys(BaseMenu):
         options = [('Show Public Key', self.show_public_key)]
 
         super(Keys, self).__init__(options=options)
-        # self.menu = Menu(header, options)
 
     def show_public_key(self):
         log.debug('Show public key')

@@ -162,6 +162,12 @@ class BaseMenu(object):
         return add_options()
 
 
+class MainMenu(BaseMenu):
+
+    def __init__(self, app_name, options):
+        super(MainMenu, self).__init__(app_name, options)
+
+
 def check_options_else_raise(options):
     # We need a least one thing to display
     # Using this as a teaching aid. Also making the use of

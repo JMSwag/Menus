@@ -26,7 +26,8 @@ import sys
 from menus.example import examples
 from menus.utils import (BaseMenu,
                          check_options_else_raise,
-                         check_mro)
+                         check_mro,
+                         MainMenu)
 
 
 __all__ = ['BaseMenu', 'Engine']
@@ -78,10 +79,7 @@ class Engine(object):
         sys.exit(0)
 
 
-class MainMenu(BaseMenu):
 
-    def __init__(self, app_name, options):
-        super(MainMenu, self).__init__(app_name, options)
 
 from ._version import get_versions
 __version__ = get_versions()['version']
