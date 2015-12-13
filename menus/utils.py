@@ -55,7 +55,6 @@ else:
 # We will use input internally to support
 # python 2 & 3
 if py2:
-    input = raw_input
     range = xrange
 
 
@@ -241,7 +240,7 @@ def ask_yes_no(question, default='no', answer=None):
         display = question + '\n' + default_display
         if answer is None:
             log.debug('Under None')
-            answer = input(display)
+            answer = six.moves.input(display)
         if answer == '':
             log.debug('Under blank')
             return default
@@ -253,7 +252,7 @@ def ask_yes_no(question, default='no', answer=None):
             return False
         else:
             print('Please answer yes or no only!\n\n')
-            input('Press enter to continue')
+            six.moves.input('Press enter to continue')
             print('\n\n\n\n\n')
 
 
@@ -267,10 +266,10 @@ def get_correct_answer(question, default=None, required=False,
                    'Use Default'.format(default))
         prompt = question + msg + '\n--> '
         if answer is None:
-            answer = input(prompt)
+            answer = six.moves.input(prompt)
         if answer == '' and required and default is not None:
             print('You have to enter a value\n\n')
-            input('Press enter to continue')
+            six.moves.input('Press enter to continue')
             print('\n\n')
             answer = None
             continue

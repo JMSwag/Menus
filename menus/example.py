@@ -23,7 +23,7 @@ from __future__ import print_function
 
 import logging
 
-from menus.utils import BaseMenu, input
+from menus.utils import BaseMenu
 
 
 log = logging.getLogger(__name__)
@@ -37,7 +37,7 @@ class Cool(BaseMenu):
 
     def speak(self):
         self.display_msg("Pass me a blanket.")
-        input()
+        six.moves.input()
         self()
 
 
@@ -49,7 +49,7 @@ class Hot(BaseMenu):
 
     def speak(self):
         self.display_msg("It's getting hot in here!")
-        input()
+        six.moves.input()
         self()
 
 
@@ -65,7 +65,7 @@ class Keys(BaseMenu):
         log.debug('Show public key')
         self.display_msg('thdkalfjl;da;ksfkda;fdkj')
         self.display_msg('Press enter to quit')
-        input()
+        six.moves.input()
         self()
 
 examples = [Cool(), Hot(), Keys()]
