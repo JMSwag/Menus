@@ -13,5 +13,6 @@ setup(name='Menus',
       license='MIT',
       packages=find_packages(),
       zip_safe=True,
+      install_requires=['six'],
       cmdclass=cmd_class,
       )

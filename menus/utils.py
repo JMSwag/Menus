@@ -60,10 +60,18 @@ if py2:
 
 class BaseMenu(object):
 
-    def __init__(self, app_name=None, options=None, message=None):
-        self.app_name = app_name
-        self.options = options
-        self.message = message
+    def __init__(self, **kwargs):
+        self.app_name = None
+        menu_name = kwargs.get('menu_name')
+        if menu_name is None:
+            self.menu_name = self.__class__.__name__
+        else:
+            self.menu_name = menu_name
+
+        self.options = kwargs.get('options')
+        if self.options is None:
+            self.options = []
+        self.message = kwargs.get('message')
 
     def __call__(self):
         x = self.display()
@@ -92,7 +100,7 @@ class BaseMenu(object):
             top = '*' * window_size + '\n'
             bottom = '\n' + '*' * window_size + '\n'
 
-            header = self.app_name + ' - ' + self.__class__.__name__
+            header = self.app_name + ' - ' + self.menu_name
             header = header.center(window_size)
             msg = top + header + bottom
             return msg
@@ -163,8 +171,8 @@ class BaseMenu(object):
 
 class MainMenu(BaseMenu):
 
-    def __init__(self, app_name, options):
-        super(MainMenu, self).__init__(app_name, options)
+    def __init__(self, options):
+        super(MainMenu, self).__init__(options=options)
 
 
 def check_options_else_raise(options):

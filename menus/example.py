@@ -20,8 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from __future__ import print_function
-
 import logging
+
+import six
 
 from menus.utils import BaseMenu
 
@@ -45,7 +46,7 @@ class Hot(BaseMenu):
 
     def __init__(self):
         options = [('Speak', self.speak)]
-        super(Hot, self).__init__(options=options)
+        super(Hot, self).__init__(options=options, menu_name='Really Hot')
 
     def speak(self):
         self.display_msg("It's getting hot in here!")
@@ -57,9 +58,7 @@ class Keys(BaseMenu):
 
     def __init__(self):
         options = [('Show Public Key', self.show_public_key)]
-
         super(Keys, self).__init__(options=options)
-        # self.menu = Menu(header, options)
 
     def show_public_key(self):
         log.debug('Show public key')

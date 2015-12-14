@@ -16,6 +16,7 @@ Fast navigation! Menu advances on number press. No need to hit enter.
 ######Limitation: Max of 8 options per menu. 64 commands total
 
 ```python
+import six
 from menus import BaseMenu, Engine
 
 
@@ -42,11 +43,11 @@ class Hot(BaseMenu):
 
     def __init__(self):
         options = [('Speak', self.speak)]
-        super(Hot, self).__init__(options=options)
+        super(Hot, self).__init__(options=options, menu_name='Really Hot')
 
     def speak(self):
-        self.display_msg("It's getting hot in here")
-        input()
+        self.display_msg("It's getting hot in here!")
+        six.moves.input()
         self()
 
 

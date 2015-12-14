@@ -63,11 +63,12 @@ class Engine(object):
             o.options.append(('Main Menu', getattr(o, 'done')))
             # Quick hack to add users class name as menu option
             # only for main menu
-            new_o = (o.__class__.__name__, o)
+            new_o = (o.menu_name, o)
             new_options.append(new_o)
         check_options_else_raise(new_options)
         new_options.append(('Quit', self.quit))
-        self.main = MainMenu(app_name, new_options)
+        self.main = MainMenu(new_options)
+        self.main.app_name = app_name
 
     def start(self):
         while 1:
