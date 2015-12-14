@@ -26,7 +26,7 @@ def deploy(sub_cmd=None):
             'twine upload dist/*']
     for c in cmds:
         os.system(c)
-    remove_dist()
+    clean()
 
 
 def docs(sub_cmd=None):
@@ -36,7 +36,7 @@ def docs(sub_cmd=None):
         os.system(c)
 
 
-def remove_dist(sub_cmd=None):
+def clean(sub_cmd=None):
     with ChDir(u'dist'):
         files = os.listdir(os.getcwd())
         for f in files:
@@ -46,10 +46,12 @@ def remove_dist(sub_cmd=None):
                 os.remove(f)
             elif os.path.isdir(f) is True:
                 shutil.rmtree(f, ignore_errors=True)
+    if os.path.exists('Menus.egg-info'):
+        shutil.rmtree('Menus.egg-info', ignore_errors=True)
 
 commands = {
     'deploy': deploy,
-    'remove_dist': remove_dist,
+    'clean': clean,
     'docs': docs
 }
 
