@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import shutil
 import sys
@@ -43,11 +44,16 @@ def clean(sub_cmd=None):
             if u'.DS' in f:
                 continue
             elif os.path.isfile(f) is True:
+                print('Removing {}'.format(f))
                 os.remove(f)
             elif os.path.isdir(f) is True:
+                print('Removing {}'.format(f))
                 shutil.rmtree(f, ignore_errors=True)
-    if os.path.exists('Menus.egg-info'):
-        shutil.rmtree('Menus.egg-info', ignore_errors=True)
+    egg = 'Menus.egg-info'
+    if os.path.exists(egg):
+        print('Removing {}'.format(egg))
+        shutil.rmtree(egg, ignore_errors=True)
+    print('Clean complete')
 
 commands = {
     'deploy': deploy,
