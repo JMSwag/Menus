@@ -1,0 +1,6 @@
+dsdev_utils
+mkdocs == 0.15.3
+mkdocs-material
+versioneer
+twine
+wheel

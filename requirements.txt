@@ -1,6 +1,1 @@
-mkdocs
-jms-utils
 six
-versioneer
-twine
-wheel

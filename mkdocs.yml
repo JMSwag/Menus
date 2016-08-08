@@ -1,7 +1,17 @@
 site_name: Menus
+site_url: http://menus.digitalsapphire.io
+site_description:
+google_analytics: ['UA-76455631-8', 'menus.digitalsapphire.io']
 pages:
 - Home: index.md
+- Changelog: changelog.md
 
-theme: simplex
+theme: 'material'
+repo_name: 'GitHub'
+repo_url: 'https://github.com/JMSwag/Menus'
+extra:
+  palette:
+    primary: 'teal'
+    accent: 'teal'
 
-dev_addr: 0.0.0.0:80
+dev_addr: 0.0.0.0:8080

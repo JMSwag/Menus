@@ -1,5 +1,7 @@
 # Menus
-Create cli menus with ease
+A CLI UI framework
+
+![alt text](https://ds-website-images-all-sites.s3.amazonaws.com/menus-screenshot.png)
 
 
 ### Installation
@@ -82,9 +84,3 @@ engine = Engine(example=True)
 
 engine.start()
 ```
-
-![alt text](https://ds-website-images-all-sites.s3.amazonaws.com/menus-screenshot.png)
-
-### Source
-[Github](https://github.com/JMSwag/Menus)
-

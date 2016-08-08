@@ -2,6 +2,9 @@ from setuptools import find_packages, setup
 
 import versioneer
 
+with open(u'requirements.txt', u'r') as f:
+    required = f.read().splitlines()
+
 cmd_class = versioneer.get_cmdclass()
 
 setup(name='Menus',
@@ -13,6 +16,6 @@ setup(name='Menus',
       license='MIT',
       packages=find_packages(),
       zip_safe=True,
-      install_requires=['six'],
+      install_requires=required,
       cmdclass=cmd_class,
       )
