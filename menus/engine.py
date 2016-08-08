@@ -77,11 +77,11 @@ class Engine(object):
         self.main = MainMenu(new_options)
         self.main.app_name = app_name
 
-    def start(self):
+    def start(self):  # pragma: no cover
         while 1:
             start = self.main.display()
             start()
 
-    def quit(self):
+    def quit(self):  # pragma: no cover
         log.debug('Quitting')
         sys.exit(0)

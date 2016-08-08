@@ -33,14 +33,29 @@ class TestUtils(object):
     def test_clear_screen_cmd(self):
         assert clear_screen_cmd == 'clear'
 
-    def test_check_options_else_raise(self):
+
+class TestOptionsElseRaise(object):
+
+    def test_default(self):
         assert check_options_else_raise([('Menu', 'First')]) is True
 
-    def test_check_optiosn_else_rasie_fail_no_tuple(self):
+    def test_empty(self):
+        with pytest.raises(MenusError):
+            check_options_else_raise([])
+
+    def test_wrong_arg(self):
+        with pytest.raises(MenusError):
+            check_options_else_raise('Bad to the bone')
+
+    def test_incorrect_tuple_item_count(self):
+        with pytest.raises(MenusError):
+            check_options_else_raise([('MainMenu', 'First', 'Extra')])
+
+    def test_fail_no_tuple(self):
         with pytest.raises(MenusError):
             check_options_else_raise(['Menu', 'First'])
 
-    def test_check_optiosn_else_rasie_fail_greater_10(self):
+    def test_fail_greater_10(self):
         with pytest.raises(MenusError):
             data = [('Menu', 'First'), ('Menu', 'First'), ('Menu', 'First'),
                     ('Menu', 'First'), ('Menu', 'First'), ('Menu', 'First'),
@@ -48,6 +63,6 @@ class TestUtils(object):
                     ('Menu', 'First'),]
             check_options_else_raise(data)
 
-    def test_check_optiosn_else_rasie_fail_string(self):
+    def test_fail_string(self):
         with pytest.raises(MenusError):
             check_options_else_raise([(112, 'First')])

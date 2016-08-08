@@ -22,16 +22,43 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 # --------------------------------------------------------------------------
-from menus import BaseMenu
+import pytest
+
+from menus import BaseMenu, MenusError
 
 
-class TestMenu(object):
+class TestBaseMenu(object):
 
     def test_base_menu_defaults(self):
         base_menu = BaseMenu()
         assert base_menu.menu_name == 'BaseMenu'
         assert len(base_menu.options) == 0
         assert base_menu.message is None
+
+
+class TestBaseMenuPauseMethods(object):
+
+    def test_enter_fail_string(self):
+        with pytest.raises(MenusError):
+            base_menu = BaseMenu()
+            base_menu.pause(enter_to_continue='test')
+
+    def test_enter_fail_number(self):
+        with pytest.raises(MenusError):
+            base_menu = BaseMenu()
+            base_menu.pause(enter_to_continue=5)
+
+    def test_seconds_fail_string(self):
+        with pytest.raises(MenusError):
+            base_menu = BaseMenu()
+            base_menu.pause(seconds='5')
+
+    def test_pause_method(self):
+        base_menu = BaseMenu()
+        assert base_menu.pause(seconds=1) is True
+
+
+class TestMyMenu(object):
 
     def test_subclass_menu_defaults(self):
         class MyMenu(BaseMenu):
