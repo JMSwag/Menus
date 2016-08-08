@@ -1,24 +1,27 @@
-# Menus
+#Menus
 A CLI UI framework
+
+[![](https://badge.fury.io/py/Menus.svg)](http://badge.fury.io/py/Menus)
+[![](https://requires.io/github/JMSwag/Menus/requirements.svg?branch=master)](https://requires.io/github/JMSwag/Menus/requirements/?branch=master)
+[![Build Status](https://travis-ci.org/JMSwag/Menus.svg?branch=master)](https://travis-ci.org/JMSwag/Menus)
+[![Code Health](https://landscape.io/github/JMSwag/Menus/master/landscape.svg?style=flat)](https://landscape.io/github/JMSwag/Menus/master)
+[![Coverage Status](https://coveralls.io/repos/github/JMSwag/Menus/badge.svg)](https://coveralls.io/github/JMSwag/Menus)
 
 ![alt text](https://ds-website-images-all-sites.s3.amazonaws.com/menus-screenshot.png)
 
 
-### Installation
+###Installation
 
 ```
 $ pip install menus
 ```
 
 
-### Usage
+###Usage
 
 Fast navigation! Menu advances on number press. No need to hit enter.
 
-######Limitation: Max of 8 options per menu. 64 commands total
-
 ```python
-import six
 from menus import BaseMenu, Engine
 
 
@@ -35,7 +38,7 @@ class Cool(BaseMenu):
         # Used to nicely display a message towards the
         # middle of the screen
         self.display_msg('Cool is speaking')
-        input()
+        self.pause()
         # Used to return to Cool Menu. If omitted
         # You'll be returned to the Main Menu
         self()
@@ -49,7 +52,7 @@ class Hot(BaseMenu):
 
     def speak(self):
         self.display_msg("It's getting hot in here!")
-        six.moves.input()
+        self.pause(seconds=3)
         self()
 
 
@@ -63,8 +66,8 @@ class Keys(BaseMenu):
     def show_public_key(self):
         log.debug('Show public key')
         self.display_msg('thdkalfjl;da;ksfkda;fdkj')
-        self.display_msg('Press enter to quit')
-        input()
+        # Will prompt user to press enter to continue
+        self.pause(enter_to_continue=True)
         self()
 
 
@@ -73,9 +76,9 @@ engine = Engine(app_name='My App', menus=[Cool(), Hot(), Keys()])
 engine.start()
 ```
 
-### Demo
+###Demo
 
-Use the below example to see Menus in action
+Use the code below to see the Menus demo in action
 
 ```python
 from menus import Engine
@@ -84,3 +87,7 @@ engine = Engine(example=True)
 
 engine.start()
 ```
+
+###Limitation
+
+8 sub-menus per app. 8 commands per sub-menu. 64 commands total

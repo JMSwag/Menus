@@ -22,41 +22,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 # --------------------------------------------------------------------------
-from __future__ import print_function
-
-import os
-import shutil
-
-from dsdev_utils.paths import ChDir
-
-HTML_DIR = os.path.join(os.getcwd(), 'site')
-DEST_DIR = os.path.join(os.path.expanduser(u'~'), u'BTSync',
-                        u'code', u'Web', u'Menus')
+from menus import BaseMenu
 
 
-def main():
-    with ChDir(DEST_DIR):
-        files = os.listdir(os.getcwd())
-        for f in files:
-            if f.startswith(u'.'):
-                continue
-            elif f in [u'Procfile', 'Staticfile', 'hostess.json']:
-                continue
-            elif os.path.isfile(f):
-                os.remove(f)
-            elif os.path.isdir(f):
-                shutil.rmtree(f, ignore_errors=True)
+class TestMenu(object):
 
-    with ChDir(HTML_DIR):
-        files = os.listdir(os.getcwd())
-        for f in files:
-            if f.startswith(u'.'):
-                continue
-            if os.path.isfile(f):
-                shutil.copy(f, os.path.join(DEST_DIR, f))
-            elif os.path.isdir(f):
-                shutil.copytree(f, DEST_DIR + os.sep + f)
+    def test_base_menu_defaults(self):
+        base_menu = BaseMenu()
+        assert base_menu.menu_name == 'BaseMenu'
+        assert len(base_menu.options) == 0
+        assert base_menu.message is None
 
-if __name__ == '__main__':
-    main()
-    print(u'Move complete')
+    def test_subclass_menu_defaults(self):
+        class MyMenu(BaseMenu):
+            def __init__(self, *args, **kwargs):
+                super(MyMenu, self).__init__(*args, **kwargs)
+
+        my_menu = MyMenu()
+        assert my_menu.menu_name == 'MyMenu'
+        assert len(my_menu.options) == 0
+        assert my_menu.message is None
+
+    def test_custom_name(self):
+        custom_menu = BaseMenu(menu_name='CustomMenu')
+        assert custom_menu.menu_name == 'CustomMenu'

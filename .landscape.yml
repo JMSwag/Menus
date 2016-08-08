@@ -1,0 +1,3 @@
+ignore-paths:
+  - menus/_version.py
+  - versioneer.py
