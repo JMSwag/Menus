@@ -40,24 +40,33 @@ log = logging.getLogger(__name__)
 class BaseMenu(object):
 
     def __init__(self, **kwargs):
+        # Used to display the apps name on all menu headers
         self.app_name = None
-        menu_name = kwargs.get('menu_name')
-        if menu_name is None:
-            self.menu_name = self.__class__.__name__
-        else:
-            self.menu_name = menu_name
 
+        # The custom menu name
+        self.menu_name = kwargs.get('menu_name')
+
+        # If we do not have a custom menu
+        # name then use the class name
+        if self.menu_name is None:
+            self.menu_name = self.__class__.__name__
+
+        # User options for this menu
         self.options = kwargs.get('options')
         if self.options is None:
             self.options = []
+
+        # A message to display when this menus loads
         self.message = kwargs.get('message')
 
     def __call__(self):
         x = self.display()
         x()
 
-    def done(self):
-        pass
+    def display(self):
+        self._display_menu_header()
+        self.display_msg(self.message)
+        return self._menu_options(self.options)
 
     def pause(self, seconds=5, enter_to_continue=False):
         if not isinstance(enter_to_continue, bool):
@@ -73,27 +82,34 @@ class BaseMenu(object):
             time.sleep(seconds)
         return True
 
+    # Prompt the user with a question & only accept
+    # yes or no answers
     def ask_yes_no(self, question, default):
         return ask_yes_no(question, default)
+
+    # Promot the user with a question & confirm it's correct.
+    # If required is True, user won't be able to enter a blank answer
+    def get_correct_answer(self, question, default, required=False):
+        return get_correct_answer(question, default, required)
+
+    # Display a message centered on the screen.
+    def display_msg(self, message=None):
+        self._display_msg(message)
+
+    def done(self):
+        pass
 
     # ToDo: Remove in v1.0
     def get_correct_action(self, question, default, required):
         return get_correct_answer(question, default, required)
     # End ToDo
 
-    def get_correct_answer(self, question, default, required):
-        return get_correct_answer(question, default, required)
-
-    def display(self):
-        self._display_menu_header()
-        self.display_msg(self.message)
-        return self._menu_options(self.options)
-
     # Takes a string and adds it to the menu header along side
     # the app name.
     def _display_menu_header(self):
         window_size = get_terminal_size()[0]
 
+        # Adding some styling to the header
         def add_style():
             top = '*' * window_size + '\n'
             bottom = '\n' + '*' * window_size + '\n'
@@ -102,10 +118,11 @@ class BaseMenu(object):
             header = header.center(window_size)
             msg = top + header + bottom
             return msg
+
         os.system(clear_screen_cmd)
         print(add_style())
 
-    def display_msg(self, message=None):
+    def _display_msg(self, message):
         window_size = get_terminal_size()[0]
         if message is None:
             return ''
@@ -114,6 +131,7 @@ class BaseMenu(object):
             log.warning('Did not pass str')
             return ''
 
+        # Home grown word wrap
         def format_msg():
             formatted = []
             finished = ['\n']
@@ -167,6 +185,7 @@ class BaseMenu(object):
         return add_options()
 
 
+# This is used as the initial Menu
 class MainMenu(BaseMenu):
 
     def __init__(self, options):

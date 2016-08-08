@@ -34,8 +34,8 @@ from menus.utils import check_options_else_raise
 log = logging.getLogger(__name__)
 
 
+# Ensure that a custom menus subclasses BaseMenu
 def check_mro(c):
-    # Ensure index 1 subclassed BaseMenu
     if issubclass(c.__class__, BaseMenu) is False:
         raise MenusError('Not a sublcass of BaseMenu \n\nclass '
                          '{}'.format(c.__class__.__name__),
@@ -46,37 +46,46 @@ def check_mro(c):
 class Engine(object):
 
     def __init__(self, app_name=None, menus=None, example=False):
+        # Name used in every menu header
         if app_name is None:
             app_name = 'ACME'
+
         # Create initial options for main menu
         options = []
-        # Options with app_name added to it
-        new_options = []
-        # Add example menu
+
+        # Adding submenus
         if example is True:
             options += examples
         else:
-            # The main menu is the same as any other menu.
-            # It displays other menus as options. To the user
-            # these options are presented as menus to be displayed
             if menus is not None:
                 for m in menus:
                     check_mro(m)
                 options += menus
 
+        # Options with app_name added to it
+        new_options = []
         for o in options:
-            # Adding the app name to each menu
+            # Adding the app name to the menu
             o.app_name = app_name
             o.options.append(('Main Menu', getattr(o, 'done')))
+
             # Quick hack to add users class name as menu option
             # only for main menu
             new_o = (o.menu_name, o)
             new_options.append(new_o)
-        check_options_else_raise(new_options)
+
         new_options.append(('Quit', self.quit))
+
+        # Sanatisation checks on passed options
+        check_options_else_raise(new_options)
+
+        # Initilazie main menu with submenus
         self.main = MainMenu(new_options)
+
+        # Adding the app name to the main menu
         self.main.app_name = app_name
 
+    # Starts event loop
     def start(self):  # pragma: no cover
         while 1:
             start = self.main.display()

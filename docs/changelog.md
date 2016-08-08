@@ -16,8 +16,19 @@
 
   - Subclass enforcement
   - Re-factored internal api
+  - BaseMenu initialization logic
+  - Checking of sub-menus
+
+###Fixed
+
+  - Logger naming
 
 ###Removed
 
   - Requirement to pass MainMenu option
   - Duplicate code
+
+
+##v0.1.0 - 2015/07/25
+
+###Initial Commit
