@@ -19,8 +19,6 @@ $ pip install menus
 
 ###Usage
 
-Fast navigation! Menu advances on number press. No need to hit enter.
-
 ```python
 from menus import BaseMenu, Engine
 
@@ -35,39 +33,58 @@ class Cool(BaseMenu):
         super(Cool, self).__init__(options=options)
 
     def speak(self):
-        # Used to nicely display a message towards the
-        # middle of the screen
+        # Used to nicely display a message towards
+        # the middle of the screen
         self.display_msg('Cool is speaking')
+
+        # Will pause for 3 seconds
         self.pause()
+
         # Used to return to Cool Menu. If omitted
-        # You'll be returned to the Main Menu
+        # the user will be returned to the Main Menu
         self()
 
 
 class Hot(BaseMenu):
 
     def __init__(self):
+        # An option is a tuple which consists of ('Display Name', function)
         options = [('Speak', self.speak)]
         super(Hot, self).__init__(options=options, menu_name='Really Hot')
 
     def speak(self):
+        # Used to nicely display a message towards
+        # the middle of the screen
         self.display_msg("It's getting hot in here!")
+
+        # Will pause for 3 seconds
         self.pause(seconds=3)
+
+        # Used to return to Cool Menu. If omitted
+        # the user will be returned to the Main Menu
         self()
 
 
 class Keys(BaseMenu):
 
     def __init__(self):
+    # An option is a tuple which consists of ('Display Name', function)
         options = [('Show Public Key', self.show_public_key)]
 
         super(Keys, self).__init__(options=options)
 
     def show_public_key(self):
         log.debug('Show public key')
+
+        # Used to nicely display a message towards
+        # the middle of the screen
         self.display_msg('thdkalfjl;da;ksfkda;fdkj')
+
         # Will prompt user to press enter to continue
         self.pause(enter_to_continue=True)
+
+        # Used to return to Cool Menu. If omitted
+        # the user will be returned to the Main Menu
         self()
 
 
@@ -78,7 +95,7 @@ engine.start()
 
 ###Demo
 
-Use the code below to see the Menus demo in action
+Use the code below to see the Menus demo in action. Note that the menu advances on number press. No need to hit enter.
 
 ```python
 from menus import Engine

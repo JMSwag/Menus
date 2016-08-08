@@ -29,7 +29,7 @@ from menus.menu import BaseMenu
 __all__ = ['BaseMenu', 'Engine', 'MenusError']
 
 
-log = logging.getLogger(__name__)
+log = logging.getLogger()
 
 
 from ._version import get_versions  # noqa
