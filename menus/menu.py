@@ -67,9 +67,11 @@ class BaseMenu(object):
             raise MenusError('seconds must be integer', expected=True)
 
         if enter_to_continue is True:
-            six.moves.input('Press enter to quit')
+            self.display_msg('Press enter to quit')
+            six.moves.input()
         else:
             time.sleep(seconds)
+        return True
 
     def ask_yes_no(self, question, default):
         return ask_yes_no(question, default)

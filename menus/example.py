@@ -25,8 +25,6 @@
 from __future__ import print_function
 import logging
 
-import six
-
 from menus.menu import BaseMenu
 
 
@@ -39,9 +37,9 @@ class Cool(BaseMenu):
         options = [('Speak', self.speak)]
         super(Cool, self).__init__(options=options)
 
-    def speak(self):
+    def speak(self):  # pragma: no cover
         self.display_msg("Pass me a blanket.")
-        six.moves.input()
+        self.pause(seconds=1)
         self()
 
 
@@ -51,9 +49,9 @@ class Hot(BaseMenu):
         options = [('Speak', self.speak)]
         super(Hot, self).__init__(options=options, menu_name='Really Hot')
 
-    def speak(self):
+    def speak(self):  # pragma: no cover
         self.display_msg("It's getting hot in here!")
-        six.moves.input()
+        self.pause(seconds=1)
         self()
 
 
@@ -63,11 +61,10 @@ class Keys(BaseMenu):
         options = [('Show Public Key', self.show_public_key)]
         super(Keys, self).__init__(options=options)
 
-    def show_public_key(self):
+    def show_public_key(self):  # pragma: no cover
         log.debug('Show public key')
         self.display_msg('thdkalfjl;da;ksfkda;fdkj')
-        self.display_msg('Press enter to quit')
-        six.moves.input()
+        self.pause(enter_to_continue=True)
         self()
 
 examples = [Cool(), Hot(), Keys()]
