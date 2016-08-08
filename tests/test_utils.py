@@ -22,41 +22,32 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 # --------------------------------------------------------------------------
-from __future__ import print_function
+import pytest
 
-import os
-import shutil
-
-from dsdev_utils.paths import ChDir
-
-HTML_DIR = os.path.join(os.getcwd(), 'site')
-DEST_DIR = os.path.join(os.path.expanduser(u'~'), u'BTSync',
-                        u'code', u'Web', u'Menus')
+from menus import MenusError
+from menus.utils import clear_screen_cmd, check_options_else_raise
 
 
-def main():
-    with ChDir(DEST_DIR):
-        files = os.listdir(os.getcwd())
-        for f in files:
-            if f.startswith(u'.'):
-                continue
-            elif f in [u'Procfile', 'Staticfile', 'hostess.json']:
-                continue
-            elif os.path.isfile(f):
-                os.remove(f)
-            elif os.path.isdir(f):
-                shutil.rmtree(f, ignore_errors=True)
+class TestUtils(object):
 
-    with ChDir(HTML_DIR):
-        files = os.listdir(os.getcwd())
-        for f in files:
-            if f.startswith(u'.'):
-                continue
-            if os.path.isfile(f):
-                shutil.copy(f, os.path.join(DEST_DIR, f))
-            elif os.path.isdir(f):
-                shutil.copytree(f, DEST_DIR + os.sep + f)
+    def test_clear_screen_cmd(self):
+        assert clear_screen_cmd == 'clear'
 
-if __name__ == '__main__':
-    main()
-    print(u'Move complete')
+    def test_check_options_else_raise(self):
+        assert check_options_else_raise([('Menu', 'First')]) is True
+
+    def test_check_optiosn_else_rasie_fail_no_tuple(self):
+        with pytest.raises(MenusError):
+            check_options_else_raise(['Menu', 'First'])
+
+    def test_check_optiosn_else_rasie_fail_greater_10(self):
+        with pytest.raises(MenusError):
+            data = [('Menu', 'First'), ('Menu', 'First'), ('Menu', 'First'),
+                    ('Menu', 'First'), ('Menu', 'First'), ('Menu', 'First'),
+                    ('Menu', 'First'), ('Menu', 'First'), ('Menu', 'First'),
+                    ('Menu', 'First'),]
+            check_options_else_raise(data)
+
+    def test_check_optiosn_else_rasie_fail_string(self):
+        with pytest.raises(MenusError):
+            check_options_else_raise([(112, 'First')])

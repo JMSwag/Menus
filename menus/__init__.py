@@ -20,67 +20,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import logging
-import sys
 
-from menus.example import examples
-from menus.utils import (BaseMenu,
-                         check_options_else_raise,
-                         check_mro,
-                         MainMenu)
+from menus.engine import Engine
+from menus.exceptions import MenusError
+from menus.menu import BaseMenu
 
 
-__all__ = ['BaseMenu', 'Engine']
+__all__ = ['BaseMenu', 'Engine', 'MenusError']
 
 
 log = logging.getLogger(__name__)
 
 
-class Engine(object):
-
-    def __init__(self, app_name=None, menus=None, example=False):
-        if app_name is None:
-            app_name = 'ACME'
-        # Create initial options for main menu
-        options = []
-        # Options with app_name added to it
-        new_options = []
-        # Add example menu
-        if example is True:
-            options += examples
-        else:
-            # The main menu is the same as any other menu.
-            # It displays other menus as options. To the user
-            # these options are presented as menus to be displayed
-            if menus is not None:
-                for m in menus:
-                    check_mro(m)
-                options += menus
-
-        for o in options:
-            # Adding the app name to each menu
-            o.app_name = app_name
-            o.options.append(('Main Menu', getattr(o, 'done')))
-            # Quick hack to add users class name as menu option
-            # only for main menu
-            new_o = (o.menu_name, o)
-            new_options.append(new_o)
-        check_options_else_raise(new_options)
-        new_options.append(('Quit', self.quit))
-        self.main = MainMenu(new_options)
-        self.main.app_name = app_name
-
-    def start(self):
-        while 1:
-            start = self.main.display()
-            start()
-
-    def quit(self):
-        log.debug('Quitting')
-        sys.exit(0)
-
-
-
-
-from ._version import get_versions
+from ._version import get_versions  # noqa
 __version__ = get_versions()['version']
 del get_versions
