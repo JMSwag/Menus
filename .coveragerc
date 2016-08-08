@@ -1,0 +1,3 @@
+[report]
+omit =
+    menus/_version.py

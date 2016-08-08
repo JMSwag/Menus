@@ -3,8 +3,9 @@ site_url: http://menus.digitalsapphire.io
 site_description:
 google_analytics: ['UA-76455631-8', 'menus.digitalsapphire.io']
 pages:
-- Home: index.md
-- Changelog: changelog.md
+  - Home: index.md
+  - Changelog: changelog.md
+  - License: license.md
 
 theme: 'material'
 repo_name: 'GitHub'

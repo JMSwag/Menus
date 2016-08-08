@@ -1,8 +1,21 @@
+*.egg-info
+
+*.log
 
 *.pyc
 
+.cache
+
+.coverage
+
+.coverage.gw*
+
+.tox
+
 build
 
-Menus.egg-info
+dist
+
+htmlcov
 
 site

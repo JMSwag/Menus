@@ -2,5 +2,8 @@ dsdev_utils
 mkdocs == 0.15.3
 mkdocs-material
 versioneer
+tox
+tox_globinterpreter
+tox-pyenv
 twine
 wheel
