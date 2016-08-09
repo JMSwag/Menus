@@ -26,7 +26,7 @@ import pytest
 
 from menus import BaseMenu, MenusError
 from menus.engine import check_mro, Engine
-from menus.example import examples
+from menus.example import load_example_menus
 
 
 class TestEngine(object):
@@ -36,9 +36,9 @@ class TestEngine(object):
         assert engine.main.app_name == 'ACME'
 
     def test_engine_example_manual(self):
-        engine = Engine(menus=examples)
+        engine = Engine(menus=load_example_menus())
         assert engine.main.app_name == 'ACME'
-        assert len(engine.main.options) == 4
+        assert len(engine.main.commands) == 4
 
 
 class TestMRO(object):

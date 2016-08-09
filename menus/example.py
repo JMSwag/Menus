@@ -22,7 +22,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 # --------------------------------------------------------------------------
-from __future__ import print_function
 import logging
 
 from menus.menu import BaseMenu
@@ -35,8 +34,8 @@ class Cool(BaseMenu):
 
     def __init__(self):
         # An option is a tuple which consists of ('Display Name', function)
-        options = [('Speak', self.speak)]
-        super(Cool, self).__init__(options=options)
+        commands = [('Speak', self.speak)]
+        super(Cool, self).__init__(commands=commands)
 
     def speak(self):
         # Used to nicely display a message towards
@@ -55,8 +54,8 @@ class Hot(BaseMenu):
 
     def __init__(self):
         # An option is a tuple which consists of ('Display Name', function)
-        options = [('Speak', self.speak)]
-        super(Hot, self).__init__(options=options, menu_name='Really Hot')
+        commands = [('Speak', self.speak)]
+        super(Hot, self).__init__(commands=commands, menu_name='Really Hot')
 
     def speak(self):
         # Used to nicely display a message towards
@@ -75,9 +74,9 @@ class Keys(BaseMenu):
 
     def __init__(self):
         # An option is a tuple which consists of ('Display Name', function)
-        options = [('Show Public Key', self.show_public_key)]
+        commands = [('Show Public Key', self.show_public_key)]
 
-        super(Keys, self).__init__(options=options)
+        super(Keys, self).__init__(commands=commands)
 
     def show_public_key(self):
         log.debug('Show public key')
@@ -93,5 +92,7 @@ class Keys(BaseMenu):
         # the user will be returned to the Main Menu
         self()
 
+
 # List of menus to be used when user initializes Engine(example=True)
-examples = [Cool(), Hot(), Keys()]
+def load_example_menus():
+    return [Cool(), Hot(), Keys()]

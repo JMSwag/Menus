@@ -22,9 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 # --------------------------------------------------------------------------
+from __future__ import print_function
 import logging
 import os
 import time
+import warnings
 
 from dsdev_utils.terminal import (ask_yes_no,
                                   get_correct_answer,
@@ -51,13 +53,29 @@ class BaseMenu(object):
         if self.menu_name is None:
             self.menu_name = self.__class__.__name__
 
-        # User options for this menu
-        self.options = kwargs.get('options')
-        if self.options is None:
-            self.options = []
-
         # A message to display when this menus loads
         self.message = kwargs.get('message')
+
+        # User commands for this menu
+        self._commands = kwargs.get('commands', [])
+
+        # ToDo: Remove in v1.0
+        # User commands for this menu
+        options = kwargs.get('options', [])
+        if len(options) > 0:
+            if len(self._commands) > 0:
+                raise MenusError('Cannot mix old & new API. Use '
+                                 'commands kwarg only.')
+
+            warn_msg = ('BaseMenu(options=[]) is deprecated, '
+                        'user BaseMenu(commands=[]')
+            warnings.warn(warn_msg)
+            self._commands += options
+        # End ToDo
+
+    @property
+    def commands(self):
+        return self._commands
 
     def __call__(self):
         x = self.display()
@@ -66,7 +84,7 @@ class BaseMenu(object):
     def display(self):
         self._display_menu_header()
         self.display_msg(self.message)
-        return self._menu_options(self.options)
+        return self._menu_options(self._commands)
 
     def pause(self, seconds=5, enter_to_continue=False):
         if not isinstance(enter_to_continue, bool):
@@ -157,17 +175,13 @@ class BaseMenu(object):
     # Takes a list of tuples(menu_name, call_back) adds menu numbers
     # then prints menu to screen.
     # Gets input from user, then returns the callback
-    def _menu_options(self, options=None):
-        if options is None:
-            return ""
-        if not isinstance(options, list):
-            return ""
+    def _menu_options(self, commands=None):
 
         def add_options():
             getch = Getch()
             menu = []
             count = 1
-            for s in options:
+            for s in commands:
                 item = '{}. {}\n'.format(count, s[0])
                 menu.append(item)
                 count += 1
@@ -181,12 +195,12 @@ class BaseMenu(object):
                     break
                 else:
                     log.debug('Not an acceptable answer!')
-            return options[int(ans) - 1][1]
+            return commands[int(ans) - 1][1]
         return add_options()
 
 
 # This is used as the initial Menu
 class MainMenu(BaseMenu):
 
-    def __init__(self, options):
-        super(MainMenu, self).__init__(options=options)
+    def __init__(self, commands):
+        super(MainMenu, self).__init__(commands=commands)
