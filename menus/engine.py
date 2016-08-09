@@ -25,10 +25,10 @@
 import logging
 import sys
 
-from menus.example import examples
+from menus.example import load_example_menus
 from menus.exceptions import MenusError
 from menus.menu import BaseMenu, MainMenu
-from menus.utils import check_options_else_raise
+from menus.utils import check_commands_else_raise
 
 
 log = logging.getLogger(__name__)
@@ -50,37 +50,37 @@ class Engine(object):
         if app_name is None:
             app_name = 'ACME'
 
-        # Create initial options for main menu
-        options = []
+        # Create initial commands for main menu
+        sub_menus = []
 
         # Adding submenus
         if example is True:
-            options += examples
+            sub_menus += load_example_menus()
         else:
             if menus is not None:
                 for m in menus:
                     check_mro(m)
-                options += menus
+                sub_menus += menus
 
-        # Options with app_name added to it
-        new_options = []
-        for o in options:
+        # Commands with app_name added to it
+        new_sub_menus = []
+        for sub in sub_menus:
             # Adding the app name to the menu
-            o.app_name = app_name
-            o.options.append(('Main Menu', getattr(o, 'done')))
+            sub.app_name = app_name
+            sub.commands.append(('Main Menu', getattr(sub, 'done')))
 
             # Quick hack to add users class name as menu option
             # only for main menu
-            new_o = (o.menu_name, o)
-            new_options.append(new_o)
+            new_sub_menu = (sub.menu_name, sub)
+            new_sub_menus.append(new_sub_menu)
 
-        new_options.append(('Quit', self.quit))
+        new_sub_menus.append(('Quit', self.quit))
 
-        # Sanatisation checks on passed options
-        check_options_else_raise(new_options)
+        # Sanatisation checks on passed commands
+        check_commands_else_raise(new_sub_menus)
 
         # Initilazie main menu with submenus
-        self.main = MainMenu(new_options)
+        self.main = MainMenu(new_sub_menus)
 
         # Adding the app name to the main menu
         self.main.app_name = app_name

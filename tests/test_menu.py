@@ -32,7 +32,7 @@ class TestBaseMenu(object):
     def test_base_menu_defaults(self):
         base_menu = BaseMenu()
         assert base_menu.menu_name == 'BaseMenu'
-        assert len(base_menu.options) == 0
+        assert len(base_menu.commands) == 0
         assert base_menu.message is None
 
 
@@ -67,8 +67,37 @@ class TestMyMenu(object):
 
         my_menu = MyMenu()
         assert my_menu.menu_name == 'MyMenu'
-        assert len(my_menu.options) == 0
+        assert len(my_menu.commands) == 0
         assert my_menu.message is None
+
+    def test_subclass_menu_options_deprecated(self):
+        class MyMenu(BaseMenu):
+
+            def __init__(self, *args, **kwargs):
+                options = [('Speak', self.speak)]
+                super(MyMenu, self).__init__(options=options)
+
+            def speak(self):
+                print('Hi from MyMenu')
+
+        my_menu = MyMenu()
+        assert my_menu.menu_name == 'MyMenu'
+        assert len(my_menu.commands) == 1
+        assert my_menu.message is None
+
+    def test_subclass_menu_command_options_mix(self):
+        class MyMenu(BaseMenu):
+
+            def __init__(self, *args, **kwargs):
+                options = [('Speak', self.speak)]
+                super(MyMenu, self).__init__(options=options,
+                                             commands=options)
+
+            def speak(self):
+                print('Hi from MyMenu')
+
+        with pytest.raises(MenusError):
+            MyMenu()
 
     def test_custom_name(self):
         custom_menu = BaseMenu(menu_name='CustomMenu')

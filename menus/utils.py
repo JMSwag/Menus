@@ -19,7 +19,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-from __future__ import print_function
 import logging
 import sys
 
@@ -44,7 +43,7 @@ else:
     clear_screen_cmd = 'clear'
 
 
-def check_options_else_raise(options):
+def check_commands_else_raise(options):
     # We need a least one thing to display
     # Using this as a teaching aid. Also making the use of
     # Engine(example=Ture) very explicit
@@ -66,7 +65,7 @@ def check_options_else_raise(options):
     for o in options:
         # Ensuring each item in list/tuple is a tuple
         if not isinstance(o, tuple):
-            raise MenusError('Each item must be a tuple')
+            raise MenusError('Item must be tuple: {}'.format(o), expected=True)
 
         if len(o) != 2:
             raise MenusError('Invalid number of tuple '
