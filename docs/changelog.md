@@ -1,7 +1,10 @@
 #Changelog
 
-## v0.2.0 - Master
+## v0.2.1 - Master
 ####* This version is not yet released and is under active development.
+
+
+## v0.2.0 - 2016/08/08
 
 ###Added
 
